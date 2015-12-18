@@ -20,8 +20,6 @@ import java.util
 
 import org.finra.datagenerator.consumer.DataPipe
 
-import scala.beans.BeanProperty
-
 /**
  * Wrapper for each result
  *

@@ -19,14 +19,12 @@ package org.finra.datagenerator
 import java._
 import java.io.{ObjectOutputStream, OutputStream}
 
-import org.finra.datagenerator.consumer.{DataPipe, DataConsumer}
-import org.finra.datagenerator.writer.{DefaultWriter, DataWriter}
-
-import scala.collection.JavaConverters._
-
 import org.apache.spark.{SparkConf, SparkContext}
+import org.finra.datagenerator.consumer.DataConsumer
 import org.finra.datagenerator.distributor.SearchDistributor
 import org.finra.datagenerator.engine.Frontier
+
+import scala.collection.JavaConverters._
 
 /**
  * Take Frontiers produced by an Engine and process the Frontiers in parallel,

@@ -1,4 +1,3 @@
-package org.finra.datagenerator;
 /*
  * Copyright 2014 DataGenerator Contributors
  *
@@ -15,6 +14,8 @@ package org.finra.datagenerator;
  * limitations under the License.
  */
 
+package org.finra.datagenerator;
+
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
@@ -27,6 +28,7 @@ import org.finra.datagenerator.distributor.multithreaded.SingleThreadedProcessin
 import org.finra.datagenerator.engine.Frontier;
 import org.finra.datagenerator.samples.transformer.SampleMachineTransformer;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -53,14 +55,20 @@ public class SparkDistributorJava implements SearchDistributor, Serializable {
     private final AtomicBoolean searchExitFlag = new AtomicBoolean(false);
     private final AtomicBoolean hardExitFlag = new AtomicBoolean(false);
     private long maxNumberOfLines = -1;
-    private String masterURL;
-    public String[] outTemplate;
+    private final String masterURL;
+    private final String[] outTemplate;
 
-
-    public SparkDistributorJava(String masterURL, String[] outTemplate) {
+    /**
+     * Sets the master URL
+     *
+     * @param masterURL a String containing master URL
+     * @param outTemplate an array of String containing variable names of the model
+     */
+    public SparkDistributorJava(final String masterURL, final String[] outTemplate) {
         this.masterURL = masterURL;
         this.outTemplate = outTemplate;
     }
+
     /**
      * Sets the maximum number of lines to generate
      *
@@ -110,7 +118,7 @@ public class SparkDistributorJava implements SearchDistributor, Serializable {
             StringBuilder stringBuilder = new StringBuilder();
 
             @Override
-            public String call(Frontier frontier) throws Exception {
+            public String call(Frontier frontier) {
 
                 dataConsumer.addDataTransformer(new SampleMachineTransformer());
 
@@ -118,11 +126,16 @@ public class SparkDistributorJava implements SearchDistributor, Serializable {
 
                 singleThreadedProcessing.setDataConsumer(dataConsumer);
 
-                stringBuilder = frontier.searchForScenarios(singleThreadedProcessing, searchExitFlag, outTemplate, stringBuilder);
+                try {
+                    stringBuilder = frontier.searchForScenarios(singleThreadedProcessing, searchExitFlag, outTemplate, stringBuilder);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                if(stringBuilder != null)
+                if (stringBuilder != null) {
 
                     finalResult = stringBuilder.toString();
+                }
 
                 return finalResult;
             }
