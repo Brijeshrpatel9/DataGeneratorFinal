@@ -36,7 +36,7 @@ import org.finra.datagenerator.engine.Frontier
  *
  * Created by Brijesh on 6/2/2015.
  */
-class SparkDistributor(masterURL: String, scalaDataConsumer: ScalaDataConsumer) extends
+class SparkDistributorScala(masterURL: String, scalaDataConsumer: ScalaDataConsumer) extends
   SearchDistributor with java.io.Serializable {
 
   val flag: Boolean = true
@@ -75,7 +75,7 @@ class SparkDistributor(masterURL: String, scalaDataConsumer: ScalaDataConsumer) 
      * NOTE: if you change something compile maven file from command line using
      * "mvn clean package"
      */
-    sparkContext.addJar("./dg-spark/target/dg-spark-2.2-SNAPSHOT.jar")
+    sparkContext.addJar("./dg-spark-example/target/dg-spark-example-2.2-SNAPSHOT.jar")
 
       for (frontier <- frontierList.asScala) {
 

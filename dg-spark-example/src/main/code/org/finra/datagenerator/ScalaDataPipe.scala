@@ -31,6 +31,9 @@ class ScalaDataPipe extends DataPipe with  java.io.Serializable {
 
   val dataMap = new util.HashMap[String,String]()
 
+  override def getDataMap(): util.HashMap[String,String] = {
+    dataMap;
+  }
   /**
    * Get data map and append it to String Builder
    *
