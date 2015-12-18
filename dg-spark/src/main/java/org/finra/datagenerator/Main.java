@@ -27,9 +27,9 @@ import java.io.IOException;
  * Created by Brijesh on 6/1/2015.
  */
 
-public final class MainJava implements Serializable {
+public final class Main implements Serializable {
 
-    private MainJava() {
+    private Main() {
         //Private Constructor
     }
 
@@ -40,7 +40,7 @@ public final class MainJava implements Serializable {
      */
     public static void main(String[] argv) throws IOException {
 
-        try (InputStream is = MainJava.class.getResourceAsStream("/samplemachine.xml")) {
+        try (InputStream is = Main.class.getResourceAsStream("/samplemachine.xml")) {
 
             SCXMLEngine scxmlEngine = new SCXMLEngine();
 

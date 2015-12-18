@@ -16,8 +16,7 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <encoding>UTF-8</encoding>
-        <scala.tools.version>2.10</scala.tools.version>
-        <scala.version>2.10.0</scala.version>
+
     </properties>
 
     <build>
@@ -25,42 +24,6 @@
         <testSourceDirectory>src/test/java</testSourceDirectory>
 
         <plugins>
-            <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>scala-maven-plugin</artifactId>
-                <version>3.2.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                        <configuration>
-                            <args>
-                                <arg>-make:transitive</arg>
-                                <arg>-dependencyfile</arg>
-                                <arg>${project.build.directory}/.scala_dependencies</arg>
-                            </args>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>scala-compile-first</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>scala-test-compile</id>
-                        <phase>process-test-resources</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!-- Maven Shade Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -88,29 +51,6 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.scalastyle</groupId>
-                <artifactId>scalastyle-maven-plugin</artifactId>
-                <version>0.6.0</version>
-                <configuration>
-                    <verbose>false</verbose>
-                    <failOnViolation>true</failOnViolation>
-                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                    <failOnWarning>false</failOnWarning>
-                    <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
-                    <testSourceDirectory>${basedir}/src/test/code</testSourceDirectory>
-                    <configLocation>${project.basedir}/../config/scalastyle_config.xml</configLocation>
-                    <outputFile>${project.basedir}/../config/scalastyle-output.xml</outputFile>
-                    <outputEncoding>UTF-8</outputEncoding>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
@@ -128,12 +68,6 @@
             <version>1.5.2</version>
         </dependency>
 
-
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>${scala.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>org.finra.datagenerator</groupId>
